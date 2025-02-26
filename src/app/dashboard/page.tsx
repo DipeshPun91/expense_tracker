@@ -89,7 +89,7 @@ export default function Dashboard() {
               className="col-span-2"
             >
               <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Budget Overview
                 </h2>
                 <BarGraph />
@@ -122,7 +122,7 @@ export default function Dashboard() {
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-300 to-purple-400 rounded-lg flex items-center justify-center">
                           <span className="text-2xl">{budget.emojiIcon}</span>
                         </div>
                         <div>

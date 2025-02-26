@@ -62,7 +62,9 @@ export default function Budget() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <h1 className="text-3xl font-bold text-gray-900">My Budget</h1>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              My Budget
+            </h1>
             <p className="text-lg text-gray-600 mt-2">
               Manage your budgets and track your spending.
             </p>

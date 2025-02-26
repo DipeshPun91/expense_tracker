@@ -97,7 +97,7 @@ export default function Expense() {
     budget.amount > 0 ? Math.min((totalSpent / budget.amount) * 100, 100) : 0;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -128,7 +128,7 @@ export default function Expense() {
             transition={{ delay: 0.3 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
-            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="bg-white p-8 rounded-2xl shadow-xl transition-shadow duration-300">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h1 className="text-4xl font-semibold text-gray-800">
@@ -161,7 +161,7 @@ export default function Expense() {
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="bg-white p-8 rounded-2xl shadow-xl transition-shadow duration-300">
               <h1 className="text-xl font-semibold text-gray-800">
                 New Expense
               </h1>
@@ -172,6 +172,7 @@ export default function Expense() {
                 <input
                   type="text"
                   value={expenseName}
+                  placeholder="e.g., Groceries"
                   onChange={(e) => setExpenseName(e.target.value)}
                   className="w-full px-4 py-2 mt-1 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -184,13 +185,14 @@ export default function Expense() {
                 <input
                   type="number"
                   value={expenseAmount}
+                  placeholder="e.g., 500"
                   onChange={(e) => setExpenseAmount(e.target.value)}
                   className="w-full px-4 py-2 mt-1 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.95 }}
                 className="mt-6 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
                 onClick={handleAddExpense}
@@ -204,69 +206,81 @@ export default function Expense() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-10"
+            className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 mt-10"
           >
-            <h2 className="text-2xl font-semibold mb-4">Expenses</h2>
-            <table className="min-w-full">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
-                    Name
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
-                    Amount
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
-                    Date
-                  </th>
-                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {budget.expenses?.map((expense, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-4 py-2 text-sm text-gray-700">
-                      {expense.name}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-700">
-                      ${expense.amount}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-700">
-                      {expense.date}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-blue-500">
-                      <DeleteExpense
-                        budgetId={budget.id}
-                        expenseId={expense.id}
-                        onDelete={(expenseId) => {
-                          setBudget((prev) => {
-                            if (!prev) return null;
-                            return {
-                              ...prev,
-                              expenses:
-                                prev.expenses?.filter(
-                                  (exp) => exp.id !== expenseId
-                                ) || [],
-                            };
-                          });
-                        }}
-                      />
-                    </td>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Expenses</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gradient-to-r from-blue-50 to-purple-50">
+                    <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                      Action
+                    </th>
                   </tr>
-                )) || (
-                  <tr>
-                    <td colSpan={4} className="text-center text-gray-500 py-4">
-                      No expenses yet.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {budget.expenses?.map((expense, index) => (
+                    <motion.tr
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                        {expense.name}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                        ${expense.amount}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                        {new Date(expense.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                        <DeleteExpense
+                          budgetId={budget.id}
+                          expenseId={expense.id}
+                          onDelete={(expenseId) => {
+                            setBudget((prev) => {
+                              if (!prev) return null;
+                              return {
+                                ...prev,
+                                expenses:
+                                  prev.expenses?.filter(
+                                    (exp) => exp.id !== expenseId
+                                  ) || [],
+                              };
+                            });
+                          }}
+                        />
+                      </td>
+                    </motion.tr>
+                  )) || (
+                    <tr>
+                      <td
+                        colSpan={4}
+                        className="text-center text-gray-500 py-4"
+                      >
+                        No expenses yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </motion.div>
         </main>
       </div>

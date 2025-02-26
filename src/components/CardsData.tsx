@@ -30,24 +30,27 @@ const CardsData = () => {
       title: "Total Budget",
       amount: cardData.totalBudget,
       icon: "Budget.svg",
-      bg: "bg-gradient-to-br from-blue-100 to-blue-50",
+      bg: "bg-white",
+      iconBg: "bg-gradient-to-br from-blue-600 to-blue-400",
     },
     {
       title: "Money Spent",
       amount: cardData.moneySpent,
       icon: "Expense.svg",
-      bg: "bg-gradient-to-br from-red-100 to-red-50",
+      bg: "bg-white",
+      iconBg: "bg-gradient-to-br from-red-600 to-red-400",
     },
     {
       title: "Budgets",
       amount: cardData.totalBudgetsCount,
       icon: "TotalBudget.svg",
-      bg: "bg-gradient-to-br from-green-100 to-green-50",
+      bg: "bg-white",
+      iconBg: "bg-gradient-to-br from-green-600 to-green-400",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {data.map((item, index) => (
         <motion.div
           key={index}
@@ -55,7 +58,7 @@ const CardsData = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
           whileHover={{ scale: 1.02 }}
-          className={`p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ${item.bg} border border-gray-200`}
+          className={`p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ${item.bg} border border-gray-200`}
         >
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
@@ -66,7 +69,7 @@ const CardsData = () => {
             </div>
             <motion.div
               whileHover={{ rotate: 15 }}
-              className="p-4 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 shadow-lg"
+              className={`p-4 rounded-lg shadow-lg ${item.iconBg}`}
             >
               <div className="relative w-12 h-12">
                 <Image
