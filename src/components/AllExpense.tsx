@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface Expense {
   id: number;
@@ -35,10 +36,10 @@ const AllExpense = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-[200px]">
         <div className="flex-col gap-4 w-full flex items-center justify-center">
-          <div className="w-20 h-20 border-4 border-transparent text-blue-600 text-4xl animate-spin flex items-center justify-center border-t-blue-600 rounded-full">
-            <div className="w-16 h-16 border-4 border-transparent text-red-500 text-2xl animate-spin flex items-center justify-center border-t-red-500 rounded-full"></div>
+          <div className="w-12 h-12 border-4 border-transparent text-blue-600 text-4xl animate-spin flex items-center justify-center border-t-blue-600 rounded-full">
+            <div className="w-8 h-8 border-4 border-transparent text-red-500 text-2xl animate-spin flex items-center justify-center border-t-red-500 rounded-full"></div>
           </div>
         </div>
       </div>
@@ -46,39 +47,62 @@ const AllExpense = () => {
   }
 
   return (
-    <div className="p-6 mt-6 rounded-lg border border-gray-900">
-      <h2 className="text-2xl font-semibold mb-4 pb-2">Expenses</h2>
-      <table className="min-w-full border border-gray-900">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
-              Name
-            </th>
-            <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
-              Amount
-            </th>
-            <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
-              Date
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense) => (
-            <tr key={expense.id} className="transition border border-gray-900">
-              <td className="px-4 py-2 text-sm text-gray-700">
-                {expense.name}
-              </td>
-              <td className="px-4 py-2 text-sm text-gray-700">
-                ${expense.amount}
-              </td>
-              <td className="px-4 py-2 text-sm text-gray-700">
-                {expense.date}
-              </td>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
+    >
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Expenses</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full">
+          <thead>
+            <tr className="bg-gradient-to-r from-blue-50 to-purple-50">
+              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Name
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                Date
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {expenses.map((expense, index) => (
+              <motion.tr
+                key={expense.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="hover:bg-gray-50 transition-colors"
+              >
+                <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                  {expense.name}
+                </td>
+                <td className="py-4 px-4 text-sm text-gray-800 font-medium">
+                  ${expense.amount.toLocaleString()}
+                </td>
+                <td className="py-4 px-4 text-sm text-gray-500">
+                  {new Date(expense.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {expenses.length === 0 && (
+        <div className="text-center py-8">
+          <p className="text-gray-500">No expenses found.</p>
+        </div>
+      )}
+    </motion.div>
   );
 };
 
