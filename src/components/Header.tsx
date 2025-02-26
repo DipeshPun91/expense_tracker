@@ -89,7 +89,7 @@ export default function Header() {
               </g>
             </svg>
           </motion.div>
-          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
             SmartWallet
           </span>
         </motion.a>

@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Header />
 
-      <section className="bg-gradient-to-br from-blue-50 to-purple-50 pt-20 pb-28">
+      <section className="bg-gradient-to-br from-blue-50 to-purple-50 py-32">
         <div className="container mx-auto px-5 flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -93,8 +93,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-br from-blue-600 to-purple-600 py-20">
-        <div className="container mx-auto px-5 text-center">
+      <section className="container bg-gradient-to-br from-blue-600 to-purple-600 py-20 rounded-3xl">
+        <div className="mx-auto px-5 text-center">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
@@ -117,6 +117,22 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <footer className="bg-gray-50 py-8 mt-20">
+        <div className="container mx-auto px-5 text-center">
+          <p className="text-gray-600">
+            &copy; 2025 Smart Financial Management. All rights reserved.
+          </p>
+          <div className="mt-4">
+            <a href="#" className="text-gray-600 hover:text-teal-600 mx-2">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-gray-600 hover:text-teal-600 mx-2">
+              Terms of Service
+            </a>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
