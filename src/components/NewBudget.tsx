@@ -11,6 +11,7 @@ import {
 import EmojiPicker from "emoji-picker-react";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 const NewBudget = () => {
   const [emojiIcon, setEmojiIcon] = useState("💲");
@@ -22,6 +23,14 @@ const NewBudget = () => {
   const { toast } = useToast();
 
   const handleAddBudget = async () => {
+    if (!budgetName || !budgetAmount) {
+      toast({
+        description: "Please fill in all fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const newBudget = {
       id: Date.now(),
       emojiIcon,
@@ -54,49 +63,57 @@ const NewBudget = () => {
     <>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger asChild>
-          <div
-            className="border border-gray-900 p-6 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-accent-dark transition-colors"
-            onClick={() => setOpenDialog(true)}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-200 cursor-pointer flex flex-col items-center justify-center h-[200px]"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-            >
-              <rect width="24" height="24" fill="transparent"></rect>
-              <path
-                d="M12 6V18"
-                stroke="#000000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></path>
-              <path
-                d="M6 12H18"
-                stroke="#000000"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></path>
-            </svg>
-            <p className="mt-4 text-lg font-semibold text-black">New Budget</p>
-          </div>
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M12 6V18"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M6 12H18"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
+            <p className="mt-4 text-lg font-semibold text-gray-900">
+              New Budget
+            </p>
+          </motion.div>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>New Budget</DialogTitle>
-            <div className="mt-5">
+            <DialogTitle className="text-2xl font-bold text-gray-900">
+              Create New Budget
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 space-y-6">
+            <div className="relative">
               <Button
                 variant="outline"
                 onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
-                className="w-full"
+                className="w-full h-14 text-2xl bg-gray-50 hover:bg-gray-100"
               >
                 {emojiIcon}
               </Button>
               {openEmojiPicker && (
-                <div className="absolute">
+                <div className="absolute z-10 mt-2">
                   <EmojiPicker
                     onEmojiClick={(e) => {
                       setEmojiIcon(e.emoji);
@@ -105,39 +122,41 @@ const NewBudget = () => {
                   />
                 </div>
               )}
-
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Budget Name
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 mt-1 bg-primary border border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
-                  value={budgetName}
-                  onChange={(e) => setBudgetName(e.target.value)}
-                />
-              </div>
-
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Budget Amount
-                </label>
-                <input
-                  type="number"
-                  className="w-full px-4 py-2 mt-1 bg-primary border border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
-                  value={budgetAmount}
-                  onChange={(e) => setBudgetAmount(e.target.value)}
-                />
-              </div>
-
-              <Button
-                className="mt-4 w-full text-black"
-                onClick={handleAddBudget}
-              >
-                Add Budget
-              </Button>
             </div>
-          </DialogHeader>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Budget Name
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="e.g., Groceries"
+                value={budgetName}
+                onChange={(e) => setBudgetName(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Budget Amount
+              </label>
+              <input
+                type="number"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="e.g., 500"
+                value={budgetAmount}
+                onChange={(e) => setBudgetAmount(e.target.value)}
+              />
+            </div>
+
+            <Button
+              onClick={handleAddBudget}
+              className="w-full h-12 bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all"
+            >
+              Add Budget
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Sidebar from "@/components/Sidebar";
 import Navigation from "@/components/Navigation";
 import NewBudget from "@/components/NewBudget";
@@ -34,7 +35,7 @@ export default function Budget() {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="flex-col gap-4 w-full flex items-center justify-center">
           <div className="w-20 h-20 border-4 border-transparent text-blue-600 text-4xl animate-spin flex items-center justify-center border-t-blue-600 rounded-full">
             <div className="w-16 h-16 border-4 border-transparent text-red-500 text-2xl animate-spin flex items-center justify-center border-t-red-500 rounded-full"></div>
@@ -44,7 +45,7 @@ export default function Budget() {
     );
 
   return (
-    <div className="flex bg-primary min-h-screen">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -52,69 +53,79 @@ export default function Budget() {
       <div className="lg:hidden">
         <Navigation />
       </div>
-      <div className="flex-1 lg:pl-64 sm:pl-0">
-        <main className="p-10">
-          <div className="mb-8">
-            <h1 className="text-2xl font-semibold">My Budget</h1>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <NewBudget />
+      <div className="flex-1 lg:pl-64">
+        <main className="p-6 lg:p-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <h1 className="text-3xl font-bold text-gray-900">My Budget</h1>
+            <p className="text-lg text-gray-600 mt-2">
+              Manage your budgets and track your spending.
+            </p>
+          </motion.div>
 
-            {budgets.map((budget) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <NewBudget />
+            </motion.div>
+
+            {budgets.map((budget, index) => {
               const progress =
                 budget.amount > 0
                   ? Math.min((budget.totalSpent / budget.amount) * 100, 100)
                   : 0;
 
               return (
-                <Link
-                  href={`/expense?id=${budget.id}`}
+                <motion.div
                   key={budget.id}
-                  className="block"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="border border-gray-900 p-4 rounded-lg cursor-pointer">
-                    <div className="flex items-center justify-between">
-                      <div className="flex justify-between w-3/4">
-                        <div>
-                          <h1 className="text-lg font-semibold text-gray-700">
+                  <Link href={`/expense?id=${budget.id}`}>
+                    <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-200 cursor-pointer">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <h2 className="text-xl font-semibold text-gray-900">
                             {budget.name}
-                          </h1>
-                          <p className="text-sm text-gray-500">
-                            Items: {budget.expenseCount}
+                          </h2>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {budget.expenseCount} items
                           </p>
                         </div>
 
-                        <div className="text-right">
-                          <p className="text-xl font-bold text-black">
-                            ${budget.amount}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            Spent:{" "}
-                            <span className="text-red-500">
-                              ${budget.totalSpent}
-                            </span>
-                          </p>
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center ml-4">
+                          <span className="text-3xl">{budget.emojiIcon}</span>
                         </div>
                       </div>
 
-                      <div className="rounded-lg overflow-hidden bg-accent w-16 h-16 flex items-center justify-center">
-                        <span className="text-4xl leading-none flex items-center justify-center">
-                          {budget.emojiIcon}
-                        </span>
+                      <div className="mt-6">
+                        <div className="flex justify-between text-sm font-medium text-gray-600 mb-2">
+                          <span>Spent: ${budget.totalSpent}</span>
+                          <span>Budget: ${budget.amount}</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
+                            style={{ width: `${progress}%` }}
+                          ></div>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-2 text-right">
+                          {progress.toFixed(0)}% spent
+                        </p>
                       </div>
                     </div>
-
-                    <div className="w-full bg-gray-300 rounded-full h-5 mt-4">
-                      <div
-                        className="bg-accent h-5 font-medium text-black text-center leading-none rounded-full"
-                        style={{ width: `${progress}%` }}
-                      >
-                        <div className="ml-1 p-1">{progress.toFixed(0)}%</div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
