@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 import Sidebar from "@/components/Sidebar";
 import Navigation from "@/components/Navigation";
 import EditBudget from "@/components/EditBudget";
 import DeleteBudget from "@/components/DeleteBudget";
 import DeleteExpense from "@/components/DeleteExpense";
-import { Button } from "@/components/ui/button";
 
 export default function Expense() {
   const searchParams = useSearchParams();
@@ -82,7 +82,7 @@ export default function Expense() {
 
   if (!budget)
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="flex-col gap-4 w-full flex items-center justify-center">
           <div className="w-20 h-20 border-4 border-transparent text-blue-600 text-4xl animate-spin flex items-center justify-center border-t-blue-600 rounded-full">
             <div className="w-16 h-16 border-4 border-transparent text-red-500 text-2xl animate-spin flex items-center justify-center border-t-red-500 rounded-full"></div>
@@ -97,7 +97,7 @@ export default function Expense() {
     budget.amount > 0 ? Math.min((totalSpent / budget.amount) * 100, 100) : 0;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -107,16 +107,28 @@ export default function Expense() {
       </div>
       <div className="flex-1 lg:pl-64 sm:pl-0">
         <main className="p-10">
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-800">My Expense</h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-8 flex items-center justify-between"
+          >
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              My Expense
+            </h1>
             <div className="flex items-center gap-4">
               <EditBudget budget={budget} />
               <DeleteBudget budgetId={budget.id} />
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-gray-900 p-6 rounded-lg flex-1">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h1 className="text-4xl font-semibold text-gray-800">
@@ -132,16 +144,16 @@ export default function Expense() {
                     Spent: <span className="text-red-500">${totalSpent}</span>
                   </p>
                 </div>
-                <div className="rounded-lg mt-6 overflow-hidden bg-accent w-40 h-40 flex items-center justify-center">
+                <div className="rounded-lg mt-6 overflow-hidden bg-blue-100 w-40 h-40 flex items-center justify-center">
                   <span className="text-7xl leading-none flex items-center justify-center">
                     {budget.emojiIcon}
                   </span>
                 </div>
               </div>
 
-              <div className="w-full bg-gray-300 rounded-full h-5 mt-12">
+              <div className="w-full bg-gray-200 rounded-full h-5 mt-12">
                 <div
-                  className="bg-accent h-5 font-medium text-black text-center leading-none rounded-full"
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 h-5 font-medium text-white text-center leading-none rounded-full"
                   style={{ width: `${progress}%` }}
                 >
                   <div className="ml-1 p-1">{progress.toFixed(0)}%</div>
@@ -149,7 +161,7 @@ export default function Expense() {
               </div>
             </div>
 
-            <div className="border border-gray-900 p-6 rounded-lg flex-1">
+            <div className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <h1 className="text-xl font-semibold text-gray-800">
                 New Expense
               </h1>
@@ -161,7 +173,7 @@ export default function Expense() {
                   type="text"
                   value={expenseName}
                   onChange={(e) => setExpenseName(e.target.value)}
-                  className="w-full px-4 py-2 mt-1 bg-primary border border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                  className="w-full px-4 py-2 mt-1 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
@@ -173,41 +185,51 @@ export default function Expense() {
                   type="number"
                   value={expenseAmount}
                   onChange={(e) => setExpenseAmount(e.target.value)}
-                  className="w-full px-4 py-2 mt-1 bg-primary border border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                  className="w-full px-4 py-2 mt-1 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
-              <Button
-                className="mt-6 w-full lg text-black"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-6 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
                 onClick={handleAddExpense}
               >
                 Add Expense
-              </Button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="border border-gray-900 p-6 mt-10 rounded-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-10"
+          >
             <h2 className="text-2xl font-semibold mb-4">Expenses</h2>
-            <table className="min-w-full border border-gray-900">
+            <table className="min-w-full">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
+                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
                     Name
                   </th>
-                  <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
+                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
                     Amount
                   </th>
-                  <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
+                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
                     Date
                   </th>
-                  <th className="py-2 px-4 bg-accent text-left text-sm font-medium text-gray-900">
+                  <th className="py-2 px-4 bg-gray-100 text-left text-sm font-medium text-gray-700">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {budget.expenses?.map((expense, index) => (
-                  <tr key={index} className="transition border border-gray-900">
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <td className="px-4 py-2 text-sm text-gray-700">
                       {expense.name}
                     </td>
@@ -238,14 +260,14 @@ export default function Expense() {
                   </tr>
                 )) || (
                   <tr>
-                    <td colSpan={3} className="text-center text-black py-4">
+                    <td colSpan={4} className="text-center text-gray-500 py-4">
                       No expenses yet.
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
-          </div>
+          </motion.div>
         </main>
       </div>
     </div>

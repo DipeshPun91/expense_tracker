@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 type DeleteBudgetProps = {
   budgetId: number;
@@ -51,9 +52,13 @@ const DeleteBudget = ({ budgetId }: DeleteBudgetProps) => {
     <>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger asChild>
-          <Button className="mt-6 w-full lg text-black" variant={"destructive"}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center bg-red-500 text-white px-4 py-2 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
+          >
             <svg
-              className="w-6 mr-2"
+              className="w-6 h-6 mr-2"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -61,13 +66,11 @@ const DeleteBudget = ({ budgetId }: DeleteBudgetProps) => {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              <line x1="10" y1="11" x2="10" y2="17"></line>
-              <line x1="14" y1="11" x2="14" y2="17"></line>
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
-            Delete
-          </Button>
+            <p className="text-lg font-semibold">Delete</p>
+          </motion.button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
