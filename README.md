@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1>Expense Tracker</h1>
 
-## Getting Started
+<h1>Description</h1>
 
-First, run the development server:
+This is a web application created using Next.js, Tailwind CSS, TypeScript, ShadCN UI, Chart.js, Emoji Picker, Framer Motion, and fs. This project aims to provide a seamless and interactive user experience with efficient design and functionality for tracking expenses effortlessly.
 
-```bash
+<h1>Features</h1>
+
+Next.js: A React framework for production that makes building and optimizing web applications easy.
+
+Tailwind CSS: A utility-first CSS framework for rapid UI development.
+
+TypeScript: A typed superset of JavaScript that adds static types, making it easier to write and maintain code.
+
+ShadCN UI: A modern and customizable UI component library for React applications.
+
+Chart.js: A flexible and easy-to-use charting library to visualize expense data.
+
+Emoji Picker: Enables users to enhance their expense notes with emojis.
+
+Framer Motion: A powerful animation library for React, providing smooth UI transitions.
+
+fs (File System): Utilized for handling file operations within the application.
+
+<h1>Installation</h1>
+
+<h3>Clone the repository:</h3>
+git clone https://github.com/DipeshPun91/expense_tracker.git
+
+<h3>Install the dependencies:</h3>
+npm install
+
+<h3>Run the development server:</h3>
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and navigate to http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<h1>Usage</h1>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Add, edit, and delete expenses effortlessly.
 
-## Learn More
+View graphical representations of your expenses using Chart.js.
 
-To learn more about Next.js, take a look at the following resources:
+Use emojis to categorize and personalize your expense notes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Experience smooth animations and modern UI components with Framer Motion and ShadCN UI.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Secure and efficient data handling with TypeScript and fs.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Enjoy tracking your expenses with an intuitive and user-friendly interface!
